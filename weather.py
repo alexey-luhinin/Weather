@@ -1,3 +1,5 @@
+#  Graphics
+from Tkinter import *
 #  Import urllib2 for get file from "openweathermap.org"
 import urllib2
 import json
@@ -21,7 +23,58 @@ with open("data.json") as data_file:
     jdata = json.load(data_file)
 
 #  Printing information about Weather
-print("Country: %s" % jdata["sys"]["country"])
-print("City: %s" % jdata["name"])
-print("t: %s" % jdata["main"]["temp"])
-print("\t%s\n\t%s" % (jdata["weather"][0]["main"],jdata["weather"][0]["description"]))
+# print("Country: %s" % jdata["sys"]["country"])
+# print("City: %s" % jdata["name"])
+# print("t: %s" % jdata["main"]["temp"])
+# print("\t%s\n\t%s" % (jdata["weather"][0]["main"],jdata["weather"][0]["description"]))
+
+class Application(Frame):
+    def createContent(self):
+        self.country = Label(self)
+        self.country["text"] = "Country: " + jdata["sys"]["country"]
+
+        self.country.pack()
+
+        self.city = Label(self)
+        self.city["text"] = "City: " + jdata["name"]
+
+        self.city.pack()
+
+
+        self.temperature = Label(self)
+        self.temperature["text"] = "Temperature: " + str(jdata["main"]["temp"])
+        self.temperature["foreground"] = "blue"
+
+        self.temperature.pack()
+
+
+        self.info = Label(self)
+        self.info["text"] = "Info: \n" + jdata["weather"][0]["main"] + "\n" + jdata["weather"][0]["description"]
+
+        self.info.pack()
+
+
+        self.CLOSE = Button(self)
+        self.CLOSE["text"] = "Close"
+        self.CLOSE["fg"] = "red"
+        self.CLOSE["command"] = self.quit
+
+        self.CLOSE.pack()
+
+
+
+
+
+
+
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.pack()
+        self.createContent()
+
+
+if (__name__ == "__main__"):
+    root = Tk()
+    app = Application(master = root)
+    app.mainloop()
+    root.destroy()
