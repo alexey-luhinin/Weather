@@ -10,7 +10,11 @@ api_key = user[1]
 
 #  Open url and download as json
 url = "http://openweathermap.org/data/2.5/weather?id=" + city_id + "&appid=" + api_key
-responce = urllib2.urlopen(url)
+try:
+    responce = urllib2.urlopen(url)
+except:
+    print("Incorect data!")
+    exit()
 data = responce.read()
 
 with open("data.json", "w") as f:
